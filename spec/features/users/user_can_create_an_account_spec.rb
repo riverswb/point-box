@@ -20,5 +20,54 @@ describe "User can create an account" do
     expect(page).to have_content("Email: #{user.email}")
   end
 
-  # scenario
+  scenario "tries to create an account without name" do
+    user_1 = create(:user)
+
+    visit new_user_path
+
+    fill_in "user[email]", with: user_1.email
+    fill_in "user[password]", with: user_1.password
+    click_button "Create User"
+
+    expect(page).to have_content("Create account failed")
+  end
+
+  scenario "tries to create an account without email" do
+    user_1 = create(:user)
+
+    visit new_user_path
+
+    fill_in "user[name]", with: user_1.name
+    fill_in "user[password]", with: user_1.password
+    click_button "Create User"
+
+    expect(page).to have_content("Create account failed")
+  end
+
+  scenario "tries to create an account without password" do
+    user_1 = create(:user)
+
+    visit new_user_path
+
+    fill_in "user[name]", with: user_1.name
+    fill_in "user[email]", with: user_1.email
+    click_button "Create User"
+
+    expect(page).to have_content("Create account failed")
+  end
+
+  scenario "tries to create an account with non-unique email" do
+    pending
+    user_1 = create(:user)
+    user_2 = create(:user, email: user_1.email)
+
+    visit new_user_path
+
+    fill_in "user[name]", with: user_2.name
+    fill_in "user[email]", with: user_2.email
+    fill_in "user[password]", with: user_2.password
+    click_button "Create User"
+
+    expect(page).to have_content("Create account failed")
+  end
 end
