@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe "User can create an account" do
-  scenario "creates an account" do
+  scenario "successfully creates an account" do
     name = "John Smith"
     email = "test@test.com"
     password = "123"
@@ -19,4 +19,6 @@ describe "User can create an account" do
     expect(page).to have_content("Name: #{user.name}")
     expect(page).to have_content("Email: #{user.email}")
   end
+
+  # scenario
 end
